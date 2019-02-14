@@ -1,0 +1,18 @@
+# This script provides the ability to configure a virtual machine in order
+# to prepare it for this challenge. It runs for every virtual machine created
+# prior to assigning it to a user. The execution time is limited to 5 minutes.
+#Необходимо добавить запрет на использование комманды cp,перемещение, echo и touch
+#права на history и keygen
+sudo sh -c $'echo "export PROMPT_COMMAND=\'history -a;history -r\'" > /.box/bashrc.d/box/rules' 
+sudo sh -c $'echo "alias ssh-keygen=\'ssh-keygen;sudo chmod 777 /home/box/.ssh/id_rsa\';sudo chmod 777 /home/box/.ssh;" >> /.box/bashrc.d/box/rules' 
+PROMPT_COMMAND="history -a"
+sudo chsh -s /bin/bash box
+sudo useradd nikita
+echo "nikita:komp" | sudo chpasswd nikita
+echo "box:box" | sudo chpasswd box
+sudo chsh -s /bin/bash nikita
+sudo chmod 777 /home
+sudo -S -u nikita mkdir /home/nikita
+sudo -S -u nikita chmod 700 /home/nikita
+sudo chmod 755 /home
+
